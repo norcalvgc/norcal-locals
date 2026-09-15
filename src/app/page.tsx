@@ -20,7 +20,7 @@ export default function Home() {
       />
       <div className="absolute inset-0 bg-white/90" aria-hidden />
 
-      <main className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
+      <main className="relative z-10 flex min-h-screen w-full flex-col items-center py-8 sm:py-10">
         <Image
           src="/logo.png"
           alt="NorCal VGC Locals logo"
@@ -38,13 +38,14 @@ export default function Home() {
           {weekLabel}
         </p>
 
-        <div className="mt-8 flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-center md:gap-4">
+        <div className="mt-8 flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
           <Image
             src="/baxcalibur.png"
             alt="Baxcalibur"
             width={SPRITE_SIZE}
             height={SPRITE_SIZE}
-            className="hidden shrink-0 mix-blend-screen md:block"
+            unoptimized
+            className="hidden size-[570px] max-w-none shrink-0 mix-blend-screen md:block"
           />
 
           <EventList events={events} />
@@ -54,7 +55,8 @@ export default function Home() {
             alt="Mega Absol Z"
             width={SPRITE_SIZE}
             height={SPRITE_SIZE}
-            className="hidden shrink-0 mix-blend-screen md:block"
+            unoptimized
+            className="hidden size-[570px] max-w-none shrink-0 mix-blend-screen md:block"
           />
         </div>
       </main>

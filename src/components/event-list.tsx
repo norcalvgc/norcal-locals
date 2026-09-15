@@ -6,7 +6,7 @@ type EventListProps = {
 
 export function EventList({ events }: EventListProps) {
   return (
-    <ul className="w-full max-w-md space-y-3">
+    <ul className="w-full min-w-0 flex-1 space-y-3">
       {events.map((event) => (
         <li
           key={event.id}
