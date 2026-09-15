@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { EventList } from "@/components/event-list";
 import { RumbleTitle } from "@/components/rumble-title";
+import { SocialFooter } from "@/components/social-footer";
 import { getEvents } from "@/lib/events";
 
 const SPRITE_SIZE = 570;
@@ -38,7 +39,7 @@ export default function Home() {
           {weekLabel}
         </p>
 
-        <div className="mt-8 flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="mt-8 flex w-full flex-col items-center gap-6 md:flex-row md:items-start md:justify-between">
           <Image
             src="/baxcalibur.png"
             alt="Baxcalibur"
@@ -60,6 +61,8 @@ export default function Home() {
           />
         </div>
       </main>
+
+      <SocialFooter />
     </div>
   );
 }
