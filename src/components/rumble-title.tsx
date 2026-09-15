@@ -10,7 +10,7 @@ export function RumbleTitle({ children, className = "" }: RumbleTitleProps) {
     >
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 translate-x-[0.08em] translate-y-[0.08em] text-[#032e8f]"
+        className="pointer-events-none absolute inset-0 translate-x-[0.045em] translate-y-[0.045em] text-norcal-orange"
       >
         {children}
       </span>

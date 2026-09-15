@@ -1,7 +1,14 @@
-import type { LocalEvent } from "@/lib/events";
+import type { LocalEvent, TournamentType } from "@/lib/events";
 
 type EventListProps = {
   events: LocalEvent[];
+};
+
+const PILL_CLASS: Record<TournamentType, string> = {
+  "League Challenge":
+    "bg-norcal-blue text-white",
+  "League Cup":
+    "bg-norcal-orange text-white",
 };
 
 export function EventList({ events }: EventListProps) {
@@ -16,7 +23,9 @@ export function EventList({ events }: EventListProps) {
             <p className="font-mono text-sm font-medium text-zinc-800">
               {event.date} · {event.time}
             </p>
-            <span className="rounded-full bg-[#032e8f]/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-[#032e8f]">
+            <span
+              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${PILL_CLASS[event.tournamentType]}`}
+            >
               {event.tournamentType}
             </span>
           </div>
