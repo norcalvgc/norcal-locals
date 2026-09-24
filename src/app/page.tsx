@@ -4,7 +4,7 @@ import { RumbleTitle } from "@/components/rumble-title";
 import { SocialFooter } from "@/components/social-footer";
 import { getEvents } from "@/lib/events";
 
-const SPRITE_SIZE = 550;
+const SPRITE_SIZE = 380;
 
 export default function Home() {
   const { weekLabel, events } = getEvents();
@@ -46,7 +46,7 @@ export default function Home() {
             width={SPRITE_SIZE}
             height={SPRITE_SIZE}
             unoptimized
-            className="hidden size-[550px] max-w-none shrink-0 mix-blend-screen md:block"
+            className="hidden size-[380px] max-w-none shrink-0 mix-blend-screen md:block"
           />
 
           <EventList events={events} />
@@ -57,7 +57,7 @@ export default function Home() {
             width={SPRITE_SIZE}
             height={SPRITE_SIZE}
             unoptimized
-            className="hidden size-[550px] max-w-none shrink-0 mix-blend-screen md:block"
+            className="hidden size-[380px] max-w-none shrink-0 mix-blend-screen md:block"
           />
         </div>
       </main>
