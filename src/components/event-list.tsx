@@ -21,13 +21,15 @@ export function EventList({ events }: EventListProps) {
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="font-mono text-sm font-medium text-zinc-800">
-              {event.date} · {event.time}
+              {event.time ? `${event.date} · ${event.time}` : event.date}
             </p>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${PILL_CLASS[event.tournamentType]}`}
-            >
-              {event.tournamentType}
-            </span>
+            {event.tournamentType ? (
+              <span
+                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${PILL_CLASS[event.tournamentType]}`}
+              >
+                {event.tournamentType}
+              </span>
+            ) : null}
           </div>
           <p className="mt-1 text-base font-semibold text-zinc-900">
             {event.store} @ {event.city}

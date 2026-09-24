@@ -6,8 +6,8 @@ import { getEvents } from "@/lib/events";
 
 // const SPRITE_SIZE = 380;
 
-export default function Home() {
-  const { weekLabel, events } = getEvents();
+export default async function Home() {
+  const { weekLabel, events } = await getEvents();
 
   return (
     <div className="relative min-h-screen overflow-hidden">
