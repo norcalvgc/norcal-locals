@@ -17,6 +17,9 @@ export type EventsPayload = {
 const SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/1sdeLsO_NQ_9Vxkn8YSEwNUj5ayTCatJzjqR8Wp5zvnE/gviz/tq?tqx=out:csv";
 
+/** Tabs after the default sheet (September 2026). Same column layout. */
+const ADDITIONAL_SHEETS = ["Q4 - 2026 (After Sept)"];
+
 const PACIFIC = "America/Los_Angeles";
 
 type SheetRow = {
@@ -193,6 +196,43 @@ function cupKey(date: Date, store: string): string {
   return `${date.getTime()}|${store.toLowerCase()}`;
 }
 
+function recordKey(row: SheetRow): string {
+  return `${row.date}|${row.event}`;
+}
+
+function mergeRecords(groups: SheetRow[][]): SheetRow[] {
+  const seen = new Set<string>();
+  const merged: SheetRow[] = [];
+  for (const group of groups) {
+    for (const row of group) {
+      const key = recordKey(row);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      merged.push(row);
+    }
+  }
+  return merged;
+}
+
+function sheetCsvUrl(sheetName?: string): string {
+  if (!sheetName) return SHEET_CSV_URL;
+  return `${SHEET_CSV_URL}&sheet=${encodeURIComponent(sheetName)}`;
+}
+
+async function fetchSheetRecords(sheetName?: string): Promise<SheetRow[]> {
+  try {
+    const res = await fetch(sheetCsvUrl(sheetName), {
+      next: { revalidate: 3600 },
+      headers: { "User-Agent": "NorCalVGC-Locals/1.0" },
+    });
+    if (!res.ok) return [];
+    const text = await res.text();
+    return sheetRowsToRecords(parseCsv(text));
+  } catch {
+    return [];
+  }
+}
+
 function mapRowsToEvents(
   records: SheetRow[],
   monday: Date,
@@ -239,15 +279,11 @@ export async function getEvents(): Promise<EventsPayload> {
   const { monday, sunday, weekLabel } = getCurrentPacificWeekRange();
 
   try {
-    const res = await fetch(SHEET_CSV_URL, {
-      next: { revalidate: 3600 },
-      headers: { "User-Agent": "NorCalVGC-Locals/1.0" },
-    });
-    if (!res.ok) {
-      return { weekLabel, events: [] };
-    }
-    const text = await res.text();
-    const records = sheetRowsToRecords(parseCsv(text));
+    const groups = await Promise.all([
+      fetchSheetRecords(),
+      ...ADDITIONAL_SHEETS.map((name) => fetchSheetRecords(name)),
+    ]);
+    const records = mergeRecords(groups);
     const events = mapRowsToEvents(records, monday, sunday);
     return { weekLabel, events };
   } catch {
