@@ -28,7 +28,7 @@ export function SocialFooter() {
   return (
     <nav
       aria-label="Social"
-      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-base font-normal uppercase leading-none tracking-widest text-zinc-700"
+      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-base font-normal leading-none tracking-widest text-zinc-700"
     >
       <a
         href="https://x.com/NorCalVGC"
