@@ -13,7 +13,7 @@ const PILL_CLASS: Record<TournamentType, string> = {
 
 export function EventList({ events }: EventListProps) {
   return (
-    <ul className="mx-auto w-full max-w-2xl space-y-3">
+    <ul className="mx-auto w-full max-w-[30rem] space-y-3">
       {events.map((event) => (
         <li
           key={event.id}
@@ -31,7 +31,7 @@ export function EventList({ events }: EventListProps) {
               </span>
             ) : null}
           </div>
-          <p className="mt-1 text-base font-semibold text-zinc-900">
+          <p className="mt-1 text-lg font-semibold text-zinc-900">
             {event.store} @ {event.city}
           </p>
         </li>
