@@ -1,7 +1,4 @@
-const PREVIOUS_FONT_PX = 18;
-const FONT_PX = PREVIOUS_FONT_PX - 2;
-const PREVIOUS_ICON_SIZE = 24;
-const ICON_SIZE = (PREVIOUS_ICON_SIZE * FONT_PX) / PREVIOUS_FONT_PX;
+const ICON_SIZE = (24 * 16) / 18;
 
 const ICONS = {
   x: "https://cdn.jsdelivr.net/npm/simple-icons@15/icons/x.svg",
@@ -28,7 +25,7 @@ export function SocialFooter() {
   return (
     <nav
       aria-label="Social"
-      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-base font-normal leading-none tracking-widest text-zinc-700"
+      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-base leading-none text-black"
     >
       <a
         href="https://x.com/NorCalVGC"
