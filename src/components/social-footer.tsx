@@ -1,4 +1,4 @@
-const ICON_SIZE = 24;
+const ICON_SIZE = (24 * 16) / 18;
 
 const ICONS = {
   x: "https://cdn.jsdelivr.net/npm/simple-icons@15/icons/x.svg",
@@ -15,7 +15,8 @@ function SocialIcon({ src }: { src: string }) {
       width={ICON_SIZE}
       height={ICON_SIZE}
       aria-hidden
-      className="block size-6 shrink-0 brightness-0"
+      className="block shrink-0 brightness-0"
+      style={{ width: ICON_SIZE, height: ICON_SIZE }}
     />
   );
 }
@@ -24,7 +25,7 @@ export function SocialFooter() {
   return (
     <nav
       aria-label="Social"
-      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-lg leading-none text-black"
+      className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono text-base leading-none text-black"
     >
       <a
         href="https://x.com/NorCalVGC"
