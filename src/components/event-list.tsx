@@ -31,7 +31,7 @@ export function EventList({ events }: EventListProps) {
               </span>
             ) : null}
           </div>
-          <p className="mt-1 text-base font-semibold text-zinc-900">
+          <p className="mt-1 text-lg font-semibold text-zinc-900">
             {event.store} @ {event.city}
           </p>
         </li>
