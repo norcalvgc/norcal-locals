@@ -17,8 +17,8 @@ export type EventsPayload = {
 const SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/1sdeLsO_NQ_9Vxkn8YSEwNUj5ayTCatJzjqR8Wp5zvnE/gviz/tq?tqx=out:csv";
 
-/** Tabs after the default sheet (September 2026). Same column layout. */
-const ADDITIONAL_SHEETS = ["Q4 - 2026 (After Sept)"];
+/** Named tabs besides whichever sheet the default CSV returns. */
+const ADDITIONAL_SHEETS = ["September 2026", "Q4 - 2026 (After Sept)"];
 
 const PACIFIC = "America/Los_Angeles";
 
@@ -70,23 +70,56 @@ function parseCsv(text: string): string[][] {
   return rows;
 }
 
+function cellAt(cells: string[], index: number): string {
+  if (index < 0) return "";
+  return cells[index]?.trim() ?? "";
+}
+
+function eventNameFromType(eventType: string, store: string): string {
+  if (!store) return "";
+  const kind = eventType.trim().toLowerCase();
+  if (kind === "cup") return `VG Cup - ${store}`;
+  if (kind === "challenge") return `VG Challenge - ${store}`;
+  return "";
+}
+
 function sheetRowsToRecords(rows: string[][]): SheetRow[] {
   if (rows.length === 0) return [];
   const header = rows[0].map((h) => h.trim());
-  const idx = {
-    event: header.indexOf("Event"),
-    date: header.indexOf("Date"),
-    startTime: header.indexOf("Round 1 Start Time"),
-    location: header.indexOf("Location"),
-  };
-  if (idx.event < 0 || idx.date < 0) return [];
+  const date = header.indexOf("Date");
+  const startTime = header.indexOf("Round 1 Start Time");
+  const location = header.indexOf("Location");
+  if (date < 0) return [];
 
-  return rows.slice(1).map((cells) => ({
-    event: cells[idx.event]?.trim() ?? "",
-    date: cells[idx.date]?.trim() ?? "",
-    startTime: idx.startTime >= 0 ? (cells[idx.startTime]?.trim() ?? "") : "",
-    location: idx.location >= 0 ? (cells[idx.location]?.trim() ?? "") : "",
-  }));
+  const event = header.indexOf("Event");
+  if (event >= 0) {
+    return rows.slice(1).map((cells) => ({
+      event: cellAt(cells, event),
+      date: cellAt(cells, date),
+      startTime: cellAt(cells, startTime),
+      location: cellAt(cells, location),
+    }));
+  }
+
+  const eventType = header.indexOf("Event Type");
+  const address = header.indexOf("Address");
+  if (eventType < 0 || location < 0) return [];
+
+  return rows.slice(1).flatMap((cells) => {
+    const eventName = eventNameFromType(
+      cellAt(cells, eventType),
+      cellAt(cells, location),
+    );
+    if (!eventName) return [];
+    return [
+      {
+        event: eventName,
+        date: cellAt(cells, date),
+        startTime: cellAt(cells, startTime),
+        location: cellAt(cells, address),
+      },
+    ];
+  });
 }
 
 function parseSheetDate(dateStr: string): Date | null {
