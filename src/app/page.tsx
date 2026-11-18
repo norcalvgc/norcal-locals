@@ -6,7 +6,12 @@ import { getEvents } from "@/lib/events";
 
 // const SPRITE_SIZE = 380;
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string | string[] }>;
+}) {
+  const { mode } = await searchParams;
   const { weekLabel, events } = await getEvents();
 
   return (
@@ -53,7 +58,7 @@ export default async function Home() {
           />
           */}
 
-          <EventList events={events} />
+          <EventList events={events} columns={mode === "column"} />
 
           {/*
           <Image
