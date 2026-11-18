@@ -39,10 +39,24 @@ export default async function Home({
         */}
 
         <div className="mt-4 sm:mt-6">
-          <RumbleTitle>NorCal VGC Locals</RumbleTitle>
+          <RumbleTitle
+            className={
+              mode === "column"
+                ? "!text-[54px] sm:!text-[72px] md:!text-[90px]"
+                : ""
+            }
+          >
+            NorCal VGC Locals
+          </RumbleTitle>
         </div>
 
-        <p className="mt-3 font-mono text-sm uppercase tracking-widest text-zinc-700 sm:text-base">
+        <p
+          className={
+            mode === "column"
+              ? "mt-3 font-mono !text-[21px] uppercase tracking-widest text-zinc-700 sm:!text-[24px]"
+              : "mt-3 font-mono text-sm uppercase tracking-widest text-zinc-700 sm:text-base"
+          }
+        >
           {weekLabel}
         </p>
 
