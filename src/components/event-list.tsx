@@ -2,6 +2,7 @@ import type { LocalEvent, TournamentType } from "@/lib/events";
 
 type EventListProps = {
   events: LocalEvent[];
+  columns?: boolean;
 };
 
 const PILL_CLASS: Record<TournamentType, string> = {
@@ -11,9 +12,15 @@ const PILL_CLASS: Record<TournamentType, string> = {
     "bg-norcal-orange text-white",
 };
 
-export function EventList({ events }: EventListProps) {
+export function EventList({ events, columns = false }: EventListProps) {
   return (
-    <ul className="mx-auto w-full max-w-[30rem] space-y-3">
+    <ul
+      className={
+        columns
+          ? "mx-auto grid w-full max-w-[60.75rem] grid-cols-2 gap-3"
+          : "mx-auto w-full max-w-[30rem] space-y-3"
+      }
+    >
       {events.map((event) => (
         <li
           key={event.id}
